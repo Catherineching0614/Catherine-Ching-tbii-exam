@@ -23,6 +23,7 @@ pg.mixer.music.play(-1)
 mute_icon = tk.PhotoImage(file="images/mute.png")
 sound_icon = tk.PhotoImage(file="images/sound.png")
 
+
 # Creating button to mute or turn on the music
 def toggle_music():
     if pg.mixer.music.get_busy():
@@ -33,9 +34,10 @@ def toggle_music():
         # If music is muted or stopped, play it and show sound icon
         pg.mixer.music.play(-1)
         music_button.config(image=sound_icon)
-music_button = tk.Button(root, image=sound_icon, width=30, height=30, command=toggle_music)
-music_button.place(x=20,y=20)
 
+
+music_button = tk.Button(root, image=sound_icon, width=30, height=30, command=toggle_music)
+music_button.place(x=20, y=20)
 
 # Title label
 name_label = tk.Label(root,
@@ -67,15 +69,18 @@ name_box.place(relx=0.5, anchor="center", y=310)
 play_button = tk.Button(root,
                         text="Let's Try",
                         font='lucida 10 bold',
-                        command=lambda:mainpage(root)
+                        command=lambda: mainpage(root)
                         )
 play_button.place(relx=0.5, anchor="center", y=350)
 
+
 def entergame(event):
     mainpage(root)
+
+
 # Add code that will enter the game when you press enter
 name_box.bind('<Return>',
-             entergame)
+              entergame)
 
 
 # Create a mainpage def that will just clear everything
@@ -180,7 +185,7 @@ def mainpage(root):
                              height=1,
                              width=15,
                              bg="#f9dad0",
-                             command=lambda:[press("Magenta"), clear_widgets]
+                             command=lambda: [press("Magenta"), clear_widgets]
                              )
     magenta_game.place(x=620, y=175)
 
@@ -227,6 +232,7 @@ def photo_button():
     button_image.pack(pady=10)
     msg = None
 
+
 def message_appear():
     global msg
 
@@ -247,6 +253,7 @@ def input_pictures(root, trial):
     label.image = photo  # To prevent garbage collection
     label.place(relx=0.5, rely=0.471, anchor="center")
 
+
 # Input hp health bar
 def input_pictures1(root, trial):
     global label1
@@ -257,6 +264,7 @@ def input_pictures1(root, trial):
     label1.image = photo1  # To prevent garbage collection
     label1.place(x=835, y=15)
 
+
 # Update the frame of gif
 def update_gif(frame):
     global gif_frames, gif_index, gif_after_id, canvas
@@ -264,6 +272,7 @@ def update_gif(frame):
     canvas.itemconfig(gif_display, image=gif_frames[gif_index])
     gif_index = (gif_index + 1) % len(gif_frames)
     gif_after_id = canvas.after(100, update_gif, frame + 1)
+
 
 # Display the cat gif
 def display_gif(root):
@@ -278,10 +287,12 @@ def display_gif(root):
     gif_display = canvas.create_image(125, 150, anchor=tk.CENTER, image=gif_frames[gif_index])
     update_gif(0)
 
+
 # Send out warning box when player input more than one letter into guess box
 def check_length(guessed_letter):
     if len(guessed_letter) > 1:
         messagebox.showwarning("Warning", "Please enter only one letter")
+
 
 # List of random mockery when player has a wrong guess
 def generate_random_mockery1():
@@ -293,6 +304,7 @@ def generate_random_mockery1():
         "It's not that hard, it's just a word",
         "Get you cat here, I bet it can do better than you"]
     return random.choice(mockery)
+
 
 # List of random mockery when players is still guessing wrong after the forth guess
 def generate_random_mockery2():
@@ -309,6 +321,7 @@ def secret_button_click():
     global secret_word, text_message
     secret_word = "pinhong"
     text_message = "Pinhong is the Chinese saying of magenta\nIt is different from REDDDD"
+
 
 # Reveal random correct letter even when the guessing is wrong after the forth try
 def reveal_incorrect_letter():
@@ -328,10 +341,11 @@ def reveal_incorrect_letter():
         # Update the display label to show the current state of the word
         display.configure(text=display_word)
 
+
 # Function to start the magenta game
 def play_magenta():
     global guessed_letter, secret_word, display_word, display, title, letter_entry, \
-    trial, label1, hidden_button
+        trial, label1, hidden_button
 
     check_length(guessed_letter.get())
     random_mockery1 = generate_random_mockery1()
@@ -382,14 +396,16 @@ def play_magenta():
                 play_button.configure(text="Exit", command=root.destroy)
                 hidden_button.destroy()
 
+
 # Clear the letter after pressing the button
 def clear_entry():
     guessed_letter.set("")  # Set the StringVar associated with the Entry to an empty string
 
+
 # Designing the page layout of the game
 def call_hangman_game(root):
     global guessed_letter, secret_word, display, title, display_word, letter_entry, \
-    trial, combined_commands, text_message
+        trial, combined_commands, text_message
 
     # Clear all widgets from the root
     clear_widgets(root)
@@ -405,10 +421,10 @@ def call_hangman_game(root):
 
     # Create label that welcomes the user
     title = tk.Label(root,
-                 text="Guess the Word",
-                 fg="#5b647d",
-                 font="Geneva 30 bold"
-                 )
+                     text="Guess the Word",
+                     fg="#5b647d",
+                     font="Geneva 30 bold"
+                     )
     title.place(relx=0.5, anchor="center", y=25)
 
     # Create a secret word
@@ -444,23 +460,26 @@ def call_hangman_game(root):
 
     enter_letter_button(root)
 
+
 # Putting a secret button that will give a hidden ending
 def secret_button(root):
     global hidden_button
     hidden_button = tk.Button(root,
-                            text="    .    ",
-                            fg="#5b647d",
-                            command=secret_button_click,
-                            font="Geneva 20",
-                            bd=0,
-                            highlightthickness=0
-                            )
+                              text="    .    ",
+                              fg="#5b647d",
+                              command=secret_button_click,
+                              font="Geneva 20",
+                              bd=0,
+                              highlightthickness=0
+                              )
     hidden_button.place(x=20, y=20)
+
 
 # Combined commands to clear guessed letter in the entry box and activate the game function
 def combined_commands(event):
     play_magenta()
     clear_entry()
+
 
 def enter_letter_button(root):
     global play_button
@@ -471,6 +490,7 @@ def enter_letter_button(root):
                             )
     play_button.place(x=20, y=575)
 
+
 # Create a label to explain the message of the game
 def now_you_know(root):
     global text_message
@@ -480,8 +500,9 @@ def now_you_know(root):
                        fg="red",
                        bg="#c4a7e7",
                        font="Geneva 14 bold"
-                 )
+                       )
     message.place(relx=0.5, anchor="center", y=530)
+
 
 # Color changing function for the color mixing widget
 def update_color1():
@@ -494,6 +515,7 @@ def update_color1():
     color_code = f'#{red:02X}{green:02X}{blue:02X}'
     color_canvas.config(bg=color_code)
     color_label.config(text=f'Color: {color_code}')
+
 
 def color_mixing_widget(root):
     global red_slider, green_slider, blue_slider, color_canvas, color_label, color_message
@@ -551,15 +573,16 @@ def color_mixing_widget(root):
     blue_slider.place(relx=0.5, anchor="center", y=450)
 
     color_message = tk.Button(root,
-                               text="In additive color mixing (in digital context), "
-                                    "different intensities of red, green, and blue light are combined \nto create a wide range of colors.For example, "
-                                    "when all three colors are at their maximum intensity, white light is produced.",
-                               font="arial 13",
+                              text="In additive color mixing (in digital context), "
+                                   "different intensities of red, green, and blue light are combined \nto create a wide range of colors.For example, "
+                                   "when all three colors are at their maximum intensity, white light is produced.",
+                              font="arial 13",
                               command=color_message_button_pressed
                               )
     color_message.place(relx=0.5, anchor="center", y=550)
 
     update_color1()
+
 
 # Adding a message button under the color mixing tool
 def color_message_button_pressed():
@@ -594,6 +617,7 @@ def update_color2():
     color_code = f'#{red:02X}{green:02X}{blue:02X}'
     color_canvas.config(bg=color_code)
     color_label.config(text=f'Color: {color_code}')
+
 
 def HSV(root):
     global hue_slider, saturation_slider, value_slider, color_canvas, color_label
@@ -653,10 +677,10 @@ def HSV(root):
 
     # Adding a message to introduce HSV
     hsv_message = tk.Label(root,
-                              text="These are the HSV bars that are most familiar in image editing software, like Photoshop"
-                                   "\nThe HSV model is often considered more intuitive for human perception of colors. ",
-                              font="arial 13"
-                              )
+                           text="These are the HSV bars that are most familiar in image editing software, like Photoshop"
+                                "\nThe HSV model is often considered more intuitive for human perception of colors. ",
+                           font="arial 13"
+                           )
     hsv_message.place(relx=0.5, anchor="center", y=550)
 
     update_color2()
@@ -668,7 +692,7 @@ def press(user_selects):
 
     if user_selects == "Usual":
         background_picture = "images/usual-background.png"
-        picture="images/usual.png"
+        picture = "images/usual.png"
         fact = "Human eye can see about 10 million colours, and blue is most people’s favourite colour"
         photo_button()
 
@@ -714,10 +738,9 @@ def press(user_selects):
 
     back_button = tk.Button(root,
                             text="Back",
-                            command=lambda:mainpage(root)
+                            command=lambda: mainpage(root)
                             )
     back_button.place(x=950, y=570)
-
 
 
 # Code to execute the code
